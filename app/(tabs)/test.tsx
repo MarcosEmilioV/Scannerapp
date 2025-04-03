@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
 export default function App() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState("Hi");
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/api/hello') // Replace with your computer's IP
@@ -13,13 +14,18 @@ export default function App() {
         }
         return response.json(); //else if its accepted, return that response jsonified
       })
-      .then(data => {console.log("DATA IS:", data); setData(data);})
+      .then(response => {
+        setData(response.loquito)
+        setLoading(false)}
+      )
       .catch(error => console.error('La cagaste:', error));
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>{data ? data : 'Loading...'}</Text>
+      {loading ? 
+      <ActivityIndicator size = "large" color = "green"/> :
+      <Text>{data}</Text>}
     </View>
   );
 }

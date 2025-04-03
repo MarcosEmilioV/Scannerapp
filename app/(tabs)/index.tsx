@@ -1,7 +1,7 @@
 import PhotoPreviewSection from '@/components/camera';
 import { AntDesign } from '@expo/vector-icons';
 import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Camera() {
@@ -36,16 +36,45 @@ export default function Camera() {
             quality: 1,
             base64: true,
             exif: false,
+            skipProcessing : true
         };
         const takedPhoto = await cameraRef.current.takePictureAsync(options);
 
-        setPhoto(takedPhoto);
+        setPhoto(takedPhoto); //THIS IS WHAT I NEED TO SEND TO MY BACKEND
+        console.log("PHOTO TAKEN: ", takedPhoto)
+        
+
+          const imagestring = takedPhoto?.base64 || "";
+          const cleanstring = imagestring.split(",")[1]
+
+          const byteCharacters = atob(cleanstring);
+
+          const byteNumbers = new Array(byteCharacters.length)
+          for (let i = 0; i < byteCharacters.length; i++){
+            byteNumbers[i] = byteCharacters.charCodeAt(i)
+          }
+          const byteArray = new Uint8Array(byteNumbers)
+          const blobimage = new Blob([byteArray], {type: "image/png"})
+          console.log("BLOB", blobimage)
+
+          const formData = new FormData();
+          formData.append("photo", blobimage, "pato.png")
+          console.log("FORMDATA:", formData)
+
+          const uploadResponse = await fetch("http://127.0.0.1:5000/", {
+            method: "POST",
+            body: formData,
+          });        
     }
   }; 
 
+
+
+
   const handleRetakePhoto = () => setPhoto(null);
 
-  if (photo) return <PhotoPreviewSection photo={photo} handleRetakePhoto={handleRetakePhoto} />
+  if (photo) 
+    return <PhotoPreviewSection photo={photo} handleRetakePhoto={handleRetakePhoto} />
 
   return (
     <View style={styles.container}>
@@ -91,3 +120,4 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+

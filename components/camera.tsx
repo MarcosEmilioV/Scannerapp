@@ -20,7 +20,13 @@ const PhotoPreviewSection = ({
 
         <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleRetakePhoto}>
-                <Fontisto name='trash' size={36} color='black' />
+                <Fontisto name='xbox' size={36} color='black' />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleRetakePhoto}>
+                <Fontisto name= 'download' size={36} color='black' />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleRetakePhoto}>
+                <Fontisto name= 'export' size={36} color='black' />
             </TouchableOpacity>
         </View>
     </SafeAreaView>
