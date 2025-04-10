@@ -1,0 +1,1 @@
+type CameraType = "front" | "back";
