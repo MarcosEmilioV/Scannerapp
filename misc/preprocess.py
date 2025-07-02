@@ -1,6 +1,7 @@
 import cv2
 import pytesseract
 
+
 pytesseract.pytesseract.tesseract_cmd= 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 text = pytesseract.image_to_string("portastestingall.jpeg", config = '--psm 11 --oem 3 dawg')
 print(text)
@@ -18,7 +19,7 @@ inverted = cv2.bitwise_not(binarized)
 
 cv2.imwrite("portastestingall.jpeg", inverted)
 cv2.imshow('hi1',binarized)
-cv2.imshow('hi',inverted)
+cv2.imshow('hellotest',inverted)
 
 
 
