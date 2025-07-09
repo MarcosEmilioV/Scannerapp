@@ -1,0 +1,8 @@
+The image has wrinkles along the whole paper, although the part with the most wrinkles is the bottom 3/3 part with the most 
+aggresive wrinkles which mainly affects the "SubTotal" and "Iva" word. 
+For the 2/3 part, meaning the middle part of the receipt, wrinkles are less agresive but there seems to be a fold wrinkle which 
+in the image kind of cuts the "Gallo Pinto" word. 
+The rest of the image seems pretty straight forward, there are not letter fadeaways other than the wrinkles in the image and some
+lighter and darker spots on the image but nothing which gives too much contrast to human eye at least.
+
+Background is too much noise since there are a lot of flower like figures and dots which cause unnecessary noise.
