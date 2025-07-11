@@ -109,7 +109,7 @@ dilated_image = thick_font(no_noise)
 ###Inverted-Dilation
 inverted_dilation = thick_font(inverted)
 
-###DESKEWED image
+###THIS IS A BRANCH TEST
 
 
 cv2.imwrite("farmaciaGRAYSCALE.jpeg",grayscale)
