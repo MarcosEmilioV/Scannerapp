@@ -1,0 +1,26 @@
+1. Nombre Formal
+2. RUC
+3. Razón social 
+4. Número/Código de sistema de facturación (Dice 2008 y no dice ASFC)
+5. Dirección del local
+6. Correo electrónico del local
+7. Tel
+8. Tipo de factura (contado)
+9. Número de factura
+10. Fecha y hora
+11. Tipo de cliente (Contado)
+12. Vendedor
+13. Cajero
+14. Información sobre la siguiente parte de la factura (cód, cant, descuento, total, descripción) respectivamente
+15. Información anterior per se.
+16. Cant total de artículos
+17. Servicios gravados:
+18. Servicios exentos:
+19. Mercancía gravadas:
+20. Subtotal
+21. Descuento total
+22. Total
+23. Paga con:
+24. "d: artículo con descuento"?
+25 Forma de pago : 
+26. Forma de pago per se (tarjeta) 27. total córdobas

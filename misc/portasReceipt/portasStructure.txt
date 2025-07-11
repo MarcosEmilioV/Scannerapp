@@ -1,0 +1,18 @@
+1. Formal Name
+2. Office location
+3. RUC
+4. Tel
+5. Número/Código del sistema de facturación (Noto que esta dice 2017)
+6. Receipt Number
+7. Change value
+8.Fecha
+9. Vendedor
+10. Toda una parte que respectivamente indica qué contenido habrá a continuación (código, descripción, cant., precio, total)
+11. La información anteriormente descrita, arriba código, abajo descripción, abajo y en horizontal cant, precio, total
+12. SubTotal
+13. Iva
+14. Total
+15. Total en $
+16. Formas de pago
+17. Forma de pago escrita tal cual y al lado el monto del total en Córdobas.
+18. Dirección

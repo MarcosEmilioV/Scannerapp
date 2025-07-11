@@ -1,0 +1,21 @@
+1. Logo (Contiene letras y el logo)
+2.Nombre Formal
+3. Ubicación del local
+4.Tel
+5.RUC
+6."Autorización DGI" y código del sistema de facturación (Noto que esta dice 2011)
+7.Númbero de la factura
+8. Parte de los productos, esquema:
+    cantidad, EA (o peso también), precio
+                                código, nombre,  precio total, E 
+9.SubTotal
+10. IVA
+11. Total
+12. Forma de pago
+13. Cambio
+14. N# de Items
+15. Información sobre membresía en el establecimiento y el comprador(se desgloza en más líneas)
+
+
+Observación: Creo que la fecha venía hasta abajo pero esa parte está rota, intuyo porque tiene un número que dice 10:50
+por lo que supongo que ahí antes venía la fecha.

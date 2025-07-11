@@ -1,0 +1,225 @@
+oo
+
+x
+
+ee
+
+Nh
+
+COMESTIBLES S.A.
+
+OFICUIS CENTRAL
+
+~30310000133270
+
+2267-5357
+
+ASFC 02/0138/11/2017/7
+
+ORIGINAL
+
+tress,
+
+=e,
+
+En Piso
+
+Temas,
+
+satas sass:
+
+=
+
+ser
+
+ND. Factyr:
+
+a7
+
+in
+
+Fecha
+
+36.6243
+
+Vendedor
+
+23/01/2025 07221 Fit
+
+aee
+
+aS
+
+Narla Lopez
+
+SSeESEee!
+
+==
+
+Cédigo
+
+Descripeién del Producto
+
+Cant.
+
+Precie
+
+Total
+
+eome
+
+—
+
+7433000061024
+
+HUEVG BLANCO 1SUND
+
+1,00
+
+97.30
+
+97 SE
+
+SPoonteS
+
+CEBOLLA ANARILLA GRANDE 418
+
+9,90
+
+42.00
+
+37, B0E
+
+TAS320037 7048
+
+GALLO PIRTO 650%
+
+i
+
+4.00
+
+90,87
+
+90.876
+
+7434004080011
+
+CHILE ARBOL 306
+
+1.00
+
+76.50
+
+76.305
+
+22201717537
+
+GALLETA CLUB SOCIAL ORIG PAG
+
+1,00
+
+51.74
+
+Sh. 786
+
+THSBOGOS1E23
+
+(19337 NANTEGQUILLA LP 100GR
+
+95,856
+
+1,00
+
+45.45
+
+4798662034853
+
+‘AIO NALLA 4 UNID.
+
+25.00E
+
+1.06
+
+25.00
+
+eaeescest:
+
+fae tossass
+
+SubTo’
+
+0$ 425.06
+
+r
+
+Ch 28.24
+
+Tyar
+
+Tot
+
+Bat
+
+ais
+
+C$ 453.30
+
+12.38
+
+Total en $:
+
+—_—
+
+ot
+
+=
+
+Pett ttt
+
+—e
+
+=:
+
+Fornas de pago
+
+453.30
+
+\
+
+c¢ Tarjeta Rancentre
+
+Accel
+
+LoTc
+
+WILLA FONTANA ICCHTS AL LASO
+
+anenedgp?*
+
+28
+
+
+
+1. Por algún motivo no confunde "OFICINA" CON "OFICUIS"
+2. No estoy seguro si no detecta del todo el "T/C"
+3. Confunde el ":" de la fecha con un "2" y lee "Fit" envés de "PM"
+4. "Narla" envés de "Marla"
+5. "Cédigo" envés de código / La "o" tiene muchos pixeles por lo que tal vez no se mira tan redonda
+6. "Descripcién" envés de "Descripción"
+7. "Precie" envés de "Precio" /De nuevo confunde la o con la e
+8. "HUEVG" BLANCO 1SUND" / Confunde el 5 con la S
+9. 1","00 envés de 1.00 / Confunde el punto con la ","
+10. "97.30" envés de "97.50" / confunde el 3 con el 5
+11. "97 SE" envés de 97.50E / Confunde el 5 con la S y evitó el 0 completamente creo
+12. "Cebolla ANARILLA grande 418" envés de "CEBOLLA AMARILLA GRANDE 1LB" / Confunde la M con la N y 1L con 4 y B con 8
+13. "9.90" envés de "0.90", y "37,B0" envés de 37.80 E
+14. "GALLO PIRTO 650% envés de GALLO PINTO 850GR / Ni yo leo eso bien y es que el doblez corta a la mitad todo eso, especialmente la I y el "850GR"
+15. "90.876" envés de "90.87G" / Confunde la G por el 6
+16. "CHILE ARBOL 306" envés de "CHILE ARBOL 30G" / Confunde la G por el 6
+17. "76.305" envés de 76.50 E / Confunde el 5 por el 3 y la E por un 5
+18. "GALLETA CLUB SOCIAL... PAG" envés de GALLETA CLUB SOCIAL... PAQ / Confunde la Q por la G
+19. "1","00 envés de 1.00 / Confunde , por .
+20. "Sh. 786" envés de 51.74 G / Confunió el 5 por la S y el 1 y . por la h creo, y el 74G por la 786?,
+ al 7 le faltan un par de pixeles, el 4 tiene muchos y la G simplemente la confunde con un 6
+21. 
+

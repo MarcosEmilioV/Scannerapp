@@ -80,7 +80,7 @@ def remove_borders(image):
     return (crop)
 
 pytesseract.pytesseract.tesseract_cmd= 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-text = pytesseract.image_to_string("farmaciaInverted_Dilated.jpeg", config = '--psm 11 --oem 3 dawg')
+text = pytesseract.image_to_string("farmacia.jpeg", config = '--psm 11 --oem 3 dawg')
 print(text)
 
 original = cv2.imread('farmacia.jpeg')
@@ -112,7 +112,7 @@ inverted_dilation = thick_font(inverted)
 ###DESKEWED image
 
 
-
+cv2.imwrite("farmaciaGRAYSCALE.jpeg",grayscale)
 cv2.imwrite("farmaciaDILATED.jpeg", dilated_image)
 cv2.imwrite("farmaciaERODED.jpeg", eroded_image)
 cv2.imwrite("farmacia_binarized.jpeg", binarized)
