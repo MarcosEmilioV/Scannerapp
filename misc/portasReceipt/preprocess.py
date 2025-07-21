@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 import pytesseract
 
 def getSkewAngle(cvImage) -> float:
@@ -79,6 +80,9 @@ def remove_borders(image):
     crop = image[y:y+h, x:x+w]
     return (crop)
 
+
+
+
 pytesseract.pytesseract.tesseract_cmd= 'C:/Program Files/Tesseract-OCR/tesseract.exe'
 text = pytesseract.image_to_string("portasInverted_Dilated.jpeg", config = '--psm 11 --oem 3 dawg')
 print(text)
@@ -110,6 +114,18 @@ dilated_image = thick_font(no_noise)
 ###Inverted-Dilation
 inverted_dilation = thick_font(inverted)
 
+
+##Targeted Dilation Bottom Part
+height = inverted_dilation.shape[0]
+bottom_start = int(height * 0.66) 
+invertioncheck = cv2.bitwise_not(inverted_dilation)
+bottom_zone = invertioncheck[bottom_start: , :]
+kernel = np.ones((2,2), np.uint8)
+
+targeted_dilation = cv2.dilate(bottom_zone, kernel, iterations = 1)
+
+
+
 ###DESKEWED image
 fixed = deskew(testDeskew)
 
@@ -121,6 +137,7 @@ cv2.imwrite("portas_inverted.jpeg", inverted)
 cv2.imwrite("portas_noise.jpeg", no_noise)
 cv2.imwrite("portasNOBORDERS.jpeg", no_borders)
 cv2.imwrite("portasInverted_Dilated.jpeg", inverted_dilation)
+cv2.imwrite("portas_Targeted_Dilated.jpeg", targeted_dilation)
 
 
 cv2.waitKey(0)
