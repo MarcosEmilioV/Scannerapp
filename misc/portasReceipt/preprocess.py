@@ -128,9 +128,8 @@ reversedilation = cv2.bitwise_not(targeted_dilation) ##reverse dilation again ca
 finished_image = np.concatenate((top_zone, reversedilation), axis = 0) ##now with the finished image i should make more things to it, probably quiet down noise since there are a lot of pixels
 
 ##Reducing more noise to the new concatenated image
-reversedagain = cv2.bitwise_not(finished_image)
 
-finished_noise = noise_removal(reversedagain)
+
 ###DESKEWED image
 fixed = deskew(testDeskew)
 cv2.imwrite("reversedTEST.jpeg", reversedagain)
