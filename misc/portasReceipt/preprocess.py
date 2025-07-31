@@ -84,7 +84,7 @@ def remove_borders(image):
 
 
 pytesseract.pytesseract.tesseract_cmd= 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-text = pytesseract.image_to_string("portasInverted_Dilated.jpeg", config = '--psm 11 --oem 3 dawg')
+text = pytesseract.image_to_string("finished_portasimage.jpeg", config = '--psm 11 --oem 3 dawg')
 print(text)
 
 original = cv2.imread('portasdecente.jpeg')
@@ -119,16 +119,23 @@ inverted_dilation = thick_font(inverted)
 height = inverted_dilation.shape[0]
 bottom_start = int(height * 0.66) 
 invertioncheck = cv2.bitwise_not(inverted_dilation)
-bottom_zone = invertioncheck[bottom_start: , :]
+top_zone = inverted_dilation[:bottom_start, :] ##image here is in white background
+bottom_zone = noise_removal(invertioncheck[bottom_start: , :]) ##image here is in black background 
 kernel = np.ones((2,2), np.uint8)
 
-targeted_dilation = cv2.dilate(bottom_zone, kernel, iterations = 1)
+targeted_dilation = cv2.dilate(bottom_zone, kernel, iterations = 1) ##takes black background white letters to dilate them
+reversedilation = cv2.bitwise_not(targeted_dilation) ##reverse dilation again cause i think it makes more sense to have all the joined image in white background
+finished_image = np.concatenate((top_zone, reversedilation), axis = 0) ##now with the finished image i should make more things to it, probably quiet down noise since there are a lot of pixels
 
+##Reducing more noise to the new concatenated image
+reversedagain = cv2.bitwise_not(finished_image)
 
-
+finished_noise = noise_removal(reversedagain)
 ###DESKEWED image
 fixed = deskew(testDeskew)
-
+cv2.imwrite("reversedTEST.jpeg", reversedagain)
+cv2.imwrite("finished_nonoise.jpeg", finished_noise)
+cv2.imwrite("finished_portasimage.jpeg", finished_image)
 cv2.imwrite("testDESKEW.jpeg", fixed)
 cv2.imwrite("portasDILATED.jpeg", dilated_image)
 cv2.imwrite("portasERODED.jpeg", eroded_image)
