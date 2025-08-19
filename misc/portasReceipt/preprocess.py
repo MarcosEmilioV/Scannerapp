@@ -84,7 +84,7 @@ def remove_borders(image):
 
 
 pytesseract.pytesseract.tesseract_cmd= 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-text = pytesseract.image_to_string("finished_portasimage.jpeg", config = '--psm 11 --oem 3 dawg')
+text = pytesseract.image_to_string("finished_portasimage.jpeg", config = '--psm 11 --oem 3 -c tessedit_char_whitelist= 0123456789.$ABCDEFGHIJKLMNOPQRSTUVWXYZ:,/')
 print(text)
 
 original = cv2.imread('portasdecente.jpeg')
@@ -112,7 +112,7 @@ eroded_image = thin_font(no_noise)
 dilated_image = thick_font(no_noise)
 
 ###Inverted-Dilation
-inverted_dilation = thick_font(inverted)
+inverted_dilation = thick_font(inverted) ##Here, neither erotion nor noise removal has been applied.
 
 
 ##Targeted Dilation Bottom Part
@@ -120,7 +120,7 @@ height = inverted_dilation.shape[0]
 bottom_start = int(height * 0.66) 
 invertioncheck = cv2.bitwise_not(inverted_dilation)
 top_zone = inverted_dilation[:bottom_start, :] ##image here is in white background
-bottom_zone = noise_removal(invertioncheck[bottom_start: , :]) ##image here is in black background 
+bottom_zone = invertioncheck[bottom_start: , :] ##image here is in black background 
 kernel = np.ones((2,2), np.uint8)
 
 targeted_dilation = cv2.dilate(bottom_zone, kernel, iterations = 1) ##takes black background white letters to dilate them
@@ -132,8 +132,6 @@ finished_image = np.concatenate((top_zone, reversedilation), axis = 0) ##now wit
 
 ###DESKEWED image
 fixed = deskew(testDeskew)
-cv2.imwrite("reversedTEST.jpeg", reversedagain)
-cv2.imwrite("finished_nonoise.jpeg", finished_noise)
 cv2.imwrite("finished_portasimage.jpeg", finished_image)
 cv2.imwrite("testDESKEW.jpeg", fixed)
 cv2.imwrite("portasDILATED.jpeg", dilated_image)
