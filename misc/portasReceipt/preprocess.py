@@ -84,8 +84,7 @@ def remove_borders(image):
 
 
 pytesseract.pytesseract.tesseract_cmd= 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-text = pytesseract.image_to_string("finished_portasimage.jpeg", config = '--psm 11 --oem 3 -c tessedit_char_whitelist= 0123456789.$ABCDEFGHIJKLMNOPQRSTUVWXYZ:,/')
-print(text)
+text = pytesseract.image_to_string("portasInverted_Dilated.jpeg", config = ' --psm 11 --oem 3 ')
 
 original = cv2.imread('portasdecente.jpeg')
 testDeskew = cv2.imread("testDESKEW.png")
