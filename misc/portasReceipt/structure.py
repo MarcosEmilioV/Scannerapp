@@ -84,8 +84,14 @@ def remove_borders(image):
 
 
 pytesseract.pytesseract.tesseract_cmd= 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-text = pytesseract.image_to_string("finished_portasimage.jpeg", config = '--psm 11 --oem 3 -c tessedit_char_whitelist=0123456789.$ABCDEFGHIJKLMNOPQRSTUVWXYZ:,/')
-print(text)
+data = pytesseract.image_to_data("finished_portasimage.jpeg", config = '--psm 11 --oem 3 ', output_type = pytesseract.Output.DICT)
+
+
+
+
+for i, word in enumerate(data['text']):
+    if word.strip():  # ignore empty OCR hits
+        print(f"{word} (conf={data['conf'][i]}, x={data['left'][i]}, y={data['top'][i]})")
 
 original = cv2.imread('portasdecente.jpeg')
 testDeskew = cv2.imread("testDESKEW.png")
@@ -127,11 +133,47 @@ targeted_dilation = cv2.dilate(bottom_zone, kernel, iterations = 1) ##takes blac
 reversedilation = cv2.bitwise_not(targeted_dilation) ##reverse dilation again cause i think it makes more sense to have all the joined image in white background
 finished_image = np.concatenate((top_zone, reversedilation), axis = 0) ##now with the finished image i should make more things to it, probably quiet down noise since there are a lot of pixels
 
-##Reducing more noise to the new concatenated image
+##Detecting Contours 
+blur = cv2.GaussianBlur(grayscale, (5,5), 0)
+edges = cv2.Canny(blur, 50, 150)
+contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+contours = sorted(contours, key=cv2.contourArea, reverse=True)
+for cnt in contours:
+    # Approximate contour shape
+    peri = cv2.arcLength(cnt, True)
+    approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
 
+    # If it's a quadrilateral (4 points), we may have found the receipt
+    if len(approx) == 4:
+        receipt_contour = approx
+        break
+
+# Apply perspective transform to "flatten" the receipt
+pts = receipt_contour.reshape(4,2)
+# Order points (top-left, top-right, bottom-right, bottom-left)
+rect = np.zeros((4,2), dtype="float32")
+s = pts.sum(axis=1)
+rect[0] = pts[np.argmin(s)]   # top-left
+rect[2] = pts[np.argmax(s)]   # bottom-right
+diff = np.diff(pts, axis=1)
+rect[1] = pts[np.argmin(diff)] # top-right
+rect[3] = pts[np.argmax(diff)] # bottom-left
+
+# Compute width & height
+(widthA, widthB) = [np.linalg.norm(rect[2]-rect[3]), np.linalg.norm(rect[1]-rect[0])]
+(heightA, heightB) = [np.linalg.norm(rect[1]-rect[2]), np.linalg.norm(rect[0]-rect[3])]
+maxWidth, maxHeight = int(max(widthA, widthB)), int(max(heightA, heightB))
+
+dst = np.array([[0,0],[maxWidth-1,0],[maxWidth-1,maxHeight-1],[0,maxHeight-1]], dtype="float32")
+M = cv2.getPerspectiveTransform(rect, dst)
+warped = cv2.warpPerspective(original, M, (maxWidth, maxHeight))
+
+# Save the cropped/warped receipt
 
 ###DESKEWED image
 fixed = deskew(testDeskew)
+cv2.imwrite("receipt_cropped.jpg", warped)
+cv2.imwrite("portasEDGES.jpeg", edges)
 cv2.imwrite("finished_portasimage.jpeg", finished_image)
 cv2.imwrite("testDESKEW.jpeg", fixed)
 cv2.imwrite("portasDILATED.jpeg", dilated_image)

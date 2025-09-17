@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 import pytesseract
 
 def getSkewAngle(cvImage) -> float:
@@ -80,11 +79,8 @@ def remove_borders(image):
     crop = image[y:y+h, x:x+w]
     return (crop)
 
-
-
-
 pytesseract.pytesseract.tesseract_cmd= 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-text = pytesseract.image_to_string("finished_portasimage.jpeg", config = '--psm 11 --oem 3 -c tessedit_char_whitelist=0123456789.$ABCDEFGHIJKLMNOPQRSTUVWXYZ:,/')
+text = pytesseract.image_to_string("portasInverted_Dilated.jpeg", config = '--psm 11 --oem 3 dawg')
 print(text)
 
 original = cv2.imread('portasdecente.jpeg')
@@ -112,27 +108,11 @@ eroded_image = thin_font(no_noise)
 dilated_image = thick_font(no_noise)
 
 ###Inverted-Dilation
-inverted_dilation = thick_font(inverted) ##Here, neither erotion nor noise removal has been applied.
-
-
-##Targeted Dilation Bottom Part
-height = inverted_dilation.shape[0]
-bottom_start = int(height * 0.66) 
-invertioncheck = cv2.bitwise_not(inverted_dilation)
-top_zone = inverted_dilation[:bottom_start, :] ##image here is in white background
-bottom_zone = invertioncheck[bottom_start: , :] ##image here is in black background 
-kernel = np.ones((2,2), np.uint8)
-
-targeted_dilation = cv2.dilate(bottom_zone, kernel, iterations = 1) ##takes black background white letters to dilate them
-reversedilation = cv2.bitwise_not(targeted_dilation) ##reverse dilation again cause i think it makes more sense to have all the joined image in white background
-finished_image = np.concatenate((top_zone, reversedilation), axis = 0) ##now with the finished image i should make more things to it, probably quiet down noise since there are a lot of pixels
-
-##Reducing more noise to the new concatenated image
-
+inverted_dilation = thick_font(inverted)
 
 ###DESKEWED image
 fixed = deskew(testDeskew)
-cv2.imwrite("finished_portasimage.jpeg", finished_image)
+
 cv2.imwrite("testDESKEW.jpeg", fixed)
 cv2.imwrite("portasDILATED.jpeg", dilated_image)
 cv2.imwrite("portasERODED.jpeg", eroded_image)
@@ -141,7 +121,6 @@ cv2.imwrite("portas_inverted.jpeg", inverted)
 cv2.imwrite("portas_noise.jpeg", no_noise)
 cv2.imwrite("portasNOBORDERS.jpeg", no_borders)
 cv2.imwrite("portasInverted_Dilated.jpeg", inverted_dilation)
-cv2.imwrite("portas_Targeted_Dilated.jpeg", targeted_dilation)
 
 
 cv2.waitKey(0)
