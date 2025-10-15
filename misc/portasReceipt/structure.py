@@ -96,6 +96,9 @@ for i, word in enumerate(data['text']):
 original = cv2.imread('portasdecente.jpeg')
 testDeskew = cv2.imread("testDESKEW.png")
 
+####################################################################################################################################################################################################################################################################
+####################################################################################################################################################################################################################################################################
+
 ### Grayscale
 grayscale = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
 
@@ -120,6 +123,8 @@ dilated_image = thick_font(no_noise)
 ###Inverted-Dilation
 inverted_dilation = thick_font(inverted) ##Here, neither erotion nor noise removal has been applied.
 
+####################################################################################################################################################################################################################################################################
+####################################################################################################################################################################################################################################################################
 
 ##Targeted Dilation Bottom Part
 height = inverted_dilation.shape[0]
@@ -133,29 +138,34 @@ targeted_dilation = cv2.dilate(bottom_zone, kernel, iterations = 1) ##takes blac
 reversedilation = cv2.bitwise_not(targeted_dilation) ##reverse dilation again cause i think it makes more sense to have all the joined image in white background
 finished_image = np.concatenate((top_zone, reversedilation), axis = 0) ##now with the finished image i should make more things to it, probably quiet down noise since there are a lot of pixels
 
+####################################################################################################################################################################################################################################################################
+####################################################################################################################################################################################################################################################################
 ##Detecting Contours 
 blur = cv2.GaussianBlur(grayscale, (5,5), 0)
 edges = cv2.Canny(blur, 50, 150)
 contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-contours = sorted(contours, key=cv2.contourArea, reverse=True)
+contours = sorted(contours, key=cv2.contourArea, reverse=True) # contours found in all the image , contours[0] would be the largest area for example contours[0] = [(x,y), (a,b),(c,d),(r,t)]
 for cnt in contours:
     # Approximate contour shape
-    peri = cv2.arcLength(cnt, True)
-    approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
+    peri = cv2.arcLength(cnt, True) # this calculates the perimeter of the supposedly found receipt based on the contours it found
+    approx = cv2.approxPolyDP(cnt, 0.02 * peri, True) # this gives coordinates an approximation, and it supposed to return 4 contours which are represented by a list with 4 elements that have 2 elements each one
 
     # If it's a quadrilateral (4 points), we may have found the receipt
     if len(approx) == 4:
-        receipt_contour = approx
+        receipt_contour = approx #this is a numpy array with coordinates which are the polygonal curve
         break
 
 # Apply perspective transform to "flatten" the receipt
-pts = receipt_contour.reshape(4,2)
+pts = receipt_contour.reshape(4,2) #i still dont know why is this needed, i think only to make sure that receipt_contour has 4 elements with the 2 points coordinates
 # Order points (top-left, top-right, bottom-right, bottom-left)
 rect = np.zeros((4,2), dtype="float32")
-s = pts.sum(axis=1)
-rect[0] = pts[np.argmin(s)]   # top-left
-rect[2] = pts[np.argmax(s)]   # bottom-right
-diff = np.diff(pts, axis=1)
+sum = pts.sum(axis=1)  # Now "s" is equal to an array of the sum of the coordinates, because what axis = 1 does is adding FX= (150,170) = 270, as a score for the pixel indicated,
+#so s stores s = [270, 710, 1550, 1070] for example 
+
+rect[0] = pts[np.argmin(sum)]   # top-left coordinates because argmin returns the minimun index from "s" where that would be top-left
+rect[2] = pts[np.argmax(sum)]   # bottom-right coordinates because argmax returnsthe max index from "s" which would be bottom right
+diff = np.diff(pts, axis=1) # Now "s" is equal to an array of the diff of the coordinates, because what np.diff axis = 1 does is substracting x from y ForEx= (150,170) = 20 , as a score for the pixel indicated,
+#so s stores s = [270, 710, 1550, 1070] for example 
 rect[1] = pts[np.argmin(diff)] # top-right
 rect[3] = pts[np.argmax(diff)] # bottom-left
 
@@ -168,7 +178,8 @@ dst = np.array([[0,0],[maxWidth-1,0],[maxWidth-1,maxHeight-1],[0,maxHeight-1]], 
 M = cv2.getPerspectiveTransform(rect, dst)
 warped = cv2.warpPerspective(original, M, (maxWidth, maxHeight))
 
-# Save the cropped/warped receipt
+####################################################################################################################################################################################################################################################################
+####################################################################################################################################################################################################################################################################
 
 ###DESKEWED image
 fixed = deskew(testDeskew)
